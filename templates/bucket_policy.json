@@ -1,0 +1,14 @@
+{
+  "Id": "GamedayObjectDeliveryPolicy",
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": ["s3:PutObject", "s3:PutObjectAcl"],
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::gameday-{{ team_name | lower }}/*",
+      "Principal": {
+        "AWS": ["336189371117"]
+      }
+    }
+  ]
+}

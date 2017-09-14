@@ -1,0 +1,17 @@
+---
+- name: AWS Lambda Function
+  lambda:
+    region: eu-central-1
+    name: "ansible_kinesis"
+    description: Lambda function to take unicorn rental messages and send them to the scoring API
+    zip_file: "6_all_lambda.zip"
+    runtime: python2.7
+    timeout: 20
+    handler: "lambda_kinesis.handler"
+    memory_size: 1024
+    role: "{{ player_role_arn }}"
+    environment_variables:
+      GD_API_TOKEN: "{{ scoring.api_token }}"
+      GD_API_BASE: "{{ scoring.url }}"
+      GD_DYNAMO_TABLE: "gameday-messages-state"
+  register: lambda_results

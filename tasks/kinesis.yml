@@ -1,0 +1,9 @@
+---
+- kinesis_stream:
+    name: "gameday-{{ team_name | lower }}"
+    region: "{{ region }}"
+    shards: 1
+    tags:
+      tool: ansible
+
+- debug: msg="Created a new Kinesis stream named gameday-{{ team_name | lower }}"

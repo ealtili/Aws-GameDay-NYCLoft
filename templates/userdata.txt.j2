@@ -1,0 +1,29 @@
+#!/bin/bash
+set -ex
+echo "Sleep a bit..."
+sleep 10
+echo "STEP: installing dependencies"
+yum install -y git python-setuptools wget unzip
+easy_install pip
+
+echo "STEP: Clone and chown app code"
+wget -O /home/ec2-user/artifact.zip {{ flask_dynamodb_url }}
+pushd ~ec2-user
+unzip -j /home/ec2-user/artifact.zip
+popd
+pip install -r /home/ec2-user/requirements.txt
+chown -R ec2-user:ec2-user /home/ec2-user/server.py
+chmod 0755 /home/ec2-user/server.py
+
+echo "STEP: configure pidfile and logs"
+touch /var/run/gameday.pid
+chown ec2-user:ec2-user /var/run/gameday.pid
+touch /var/log/gameday.log
+chown ec2-user:ec2-user /var/log/gameday.log
+
+echo "STEP: start webapp"
+export AWS_DEFAULT_REGION={{ region }}
+export GD_API_TOKEN={{ scoring.api_token }}
+export GD_API_BASE={{ scoring.url }}
+export GD_DYNAMO_TABLE=gameday-messages-state
+nohup python /home/ec2-user/server.py >/var/log/gameday.log 2>&1 & echo \$! > /var/run/gameday.pid

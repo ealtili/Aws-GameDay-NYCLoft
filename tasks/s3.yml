@@ -1,0 +1,10 @@
+---
+- s3_bucket:
+    name: "gameday-{{ team_name | lower }}"
+    region: "{{ region }}"
+    policy: "{{ lookup('template', 'templates/bucket_policy.json') }}"
+    versioning: no
+    tags:
+      tool: ansible
+
+- debug: msg="Created an S3 bucket named gameday-{{ team_name | lower }}"

@@ -1,0 +1,9 @@
+- dynamodb_table:
+    name: "gameday-messages-state"
+    region: "{{ region }}"
+    hash_key_name: msg_id
+    hash_key_type: STRING
+    range_key_name: part_number
+    range_key_type: NUMBER
+    read_capacity: 5
+    write_capacity: 5
