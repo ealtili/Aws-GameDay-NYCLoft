@@ -26,7 +26,7 @@ Configure and run these Ansible playbooks to stand up all the infrastructure.
 
 ### How to use
 
-- Pip install ansible and boto3 `pip install ansible boto3` (or use the Ansible AMI mentioned in the ansible_0_workdir drop)
+- Pip install ansible and boto3 `pip install ansible boto3` (or use the Ansible AMI mentioned ami-515cf23e``` for eu-central-1)
 
 - fill out all the variables needed in the vars.yml file
 
